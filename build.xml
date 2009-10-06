@@ -1,0 +1,43 @@
+<project name="WireworldEvolver" default="dist"
+         basedir=".">
+    <description>
+        WireworldEvolver
+    </description>
+    <property name="main_src" value="src/main"/>
+    <property name="tests_src" value="src/tests"/>
+    <property name="junitcp" value="/home/jani/junit4.7/junit-4.7.jar"/>
+    <property name="build" value="build"/>
+    <property name="dist" value="dist"/>
+    <property name="mainClass" value="wireworldevolver.Main"/>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}/main"/>
+    </target>
+
+    <target name="compile" depends="init"
+        description="compiles the source">
+        <javac srcdir="${main_src}" destdir="${build}/main"/>
+    </target>
+
+    <target name="dist" depends="compile"
+        description="generates a dist">
+        <mkdir dir ="${dist}"/>
+        <jar jarfile="${dist}/WireworldEvolver-${DSTAMP}.jar"
+             basedir="${build}/main">
+             <manifest>
+                <attribute name="Main-Class" value="${mainClass}"/>
+             </manifest>
+         </jar>
+    </target>
+
+    <target name="test" depends="compile">
+        <javac srcdir="${tests_src}"  destdir="${build}"/>
+    </target>
+
+    <target name="clean"
+        description="cleans up">
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
