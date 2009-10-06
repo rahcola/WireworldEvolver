@@ -5,6 +5,7 @@
     </description>
     <property name="main_src" value="src/main"/>
     <property name="tests_src" value="src/tests"/>
+    <property name="api" value="doc/api"/>
     <property name="junitcp" value="/home/jani/junit4.7/junit-4.7.jar"/>
     <property name="maincp" value="src/main"/>
     <property name="testscp" value="src"/>
@@ -23,7 +24,7 @@
                classpath="${maincp}" destdir="${build}/main"/>
     </target>
 
-    <target name="dist" depends="compile"
+    <target name="dist" depends="compile,javadoc"
         description="generates a dist">
         <mkdir dir ="${dist}"/>
         <jar jarfile="${dist}/WireworldEvolver-${DSTAMP}.jar"
@@ -44,5 +45,14 @@
         description="cleans up">
         <delete dir="${build}"/>
         <delete dir="${dist}"/>
+    </target>
+
+    <target name="javadoc">
+            <mkdir dir="${api}" />
+            <javadoc sourcepath="${main_src}"
+                    destdir="${api}"
+                    packagenames="wireworldevolver"
+                    classpath="${maincp}"
+                    use="true" />
     </target>
 </project>
