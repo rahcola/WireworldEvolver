@@ -11,7 +11,9 @@ import java.io.*;
 public class BoardFileManager {
 
     private String filePath;
-    private FileReader reader;
+    private FileInputStream fileStream;
+    private InputStreamReader in;
+    private BufferedReader reader;
 
     /**
      * Constructor doing nothing.
@@ -24,7 +26,9 @@ public class BoardFileManager {
      * @throws FileNotFoundException
      */
     private void openFile() throws FileNotFoundException {
-        reader = new FileReader(filePath);
+        fileStream = new FileInputStream(filePath);
+        in = new InputStreamReader(fileStream);
+        reader = new BufferedReader(in);
     }
 
     /**
@@ -32,6 +36,8 @@ public class BoardFileManager {
      * @throws IOException
      */
     private void closeFile() throws IOException {
+        fileStream.close();
+        in.close();
         reader.close();
     }
 
@@ -58,25 +64,21 @@ public class BoardFileManager {
      */
      private Vector<Integer> readLine() throws IOException {
         Vector<Integer> chars = new Vector<Integer>();
-        String eol = System.getProperty("line.separator");
-        String c;
-        String minusOne = Character.toString((char)(-1));
-
-        c = Character.toString((char)(reader.read()));
-        while (c.compareTo(eol) == 0) {
-            if (c.compareTo(minusOne) == 0) {
-                return null;
-            }
-            if (c.compareTo("1") == 0) {
+        String line;
+        line = reader.readLine();
+        if (line == null) {
+            return null;
+        }
+        for (int i = 0; i < line.length(); i++) {
+            if (line.charAt(i) == '1') {
                 chars.add(Integer.valueOf(1));
-            } else if (c.compareTo("2") == 0) {
+            } else if (line.charAt(i) == '2') {
                 chars.add(Integer.valueOf(2));
-            } else if (c.compareTo("3") == 0) {
+            } else if (line.charAt(i) == '3') {
                 chars.add(Integer.valueOf(3));
             } else {
                 chars.add(Integer.valueOf(0));
             }
-            c = Character.toString((char)(reader.read()));
         }
         return chars;
      }
