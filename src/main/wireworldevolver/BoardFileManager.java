@@ -58,22 +58,25 @@ public class BoardFileManager {
      */
      private Vector<Integer> readLine() throws IOException {
         Vector<Integer> chars = new Vector<Integer>();
-        int c = reader.read();
+        String eol = System.getProperty("line.separator");
+        String c;
+        String minusOne = Character.toString((char)(-1));
 
-        while (c != 10 || c != 13 ) {
-            if (c == -1) {
+        c = Character.toString((char)(reader.read()));
+        while (c.compareTo(eol) == 0) {
+            if (c.compareTo(minusOne) == 0) {
                 return null;
             }
-            if (c == 49) {
+            if (c.compareTo("1") == 0) {
                 chars.add(Integer.valueOf(1));
-            } else if (c == 50) {
+            } else if (c.compareTo("2") == 0) {
                 chars.add(Integer.valueOf(2));
-            } else if (c == 51) {
+            } else if (c.compareTo("3") == 0) {
                 chars.add(Integer.valueOf(3));
             } else {
                 chars.add(Integer.valueOf(0));
             }
-            c = reader.read();
+            c = Character.toString((char)(reader.read()));
         }
         return chars;
      }
