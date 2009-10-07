@@ -88,6 +88,13 @@ public class UIModel {
     }
 
     /**
+     * Stops continuos update of the board.
+     */
+    public void stopContinuosUpdate() {
+        stateManager.stopContinuosUpdate();
+    }
+
+    /**
      * 
      */
     public void setSpeed(int speed) {

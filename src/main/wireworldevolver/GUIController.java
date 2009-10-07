@@ -46,6 +46,7 @@ public class GUIController {
         public void actionPerformed(ActionEvent e) {
             try {
                 model.loadFile(view.getFilePathText()); 
+                model.stopContinuosUpdate();
                 view.visualBoard();
             } catch (Exception ex) {
                 view.showError("Unable to open file.");
