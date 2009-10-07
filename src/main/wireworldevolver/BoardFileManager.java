@@ -60,7 +60,7 @@ public class BoardFileManager {
         Vector<Integer> chars = new Vector<Integer>();
         int c = reader.read();
 
-        while (c != 10 && c != 13 ) {
+        while (c != 10 || c != 13 ) {
             if (c == -1) {
                 return null;
             }
