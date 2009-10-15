@@ -3,42 +3,36 @@
     <description>
         WireworldEvolver
     </description>
-    <property name="main_src" value="src/main"/>
-    <property name="tests_src" value="src/tests"/>
+    <property name="src" value="src"/>
     <property name="api" value="doc/api"/>
-    <property name="junitcp" value="/home/jani/junit4.7/junit-4.7.jar"/>
-    <property name="maincp" value="src/main"/>
-    <property name="testscp" value="src"/>
     <property name="build" value="build"/>
     <property name="dist" value="dist"/>
     <property name="mainClass" value="wireworldevolver.Main"/>
 
     <target name="init">
         <tstamp/>
-        <mkdir dir="${build}/main"/>
+        <mkdir dir="${build}"/>
+        <copy todir="${build}">
+            <fileset dir="${src}/wireworldevolver/test/txtfiles"/>
+        </copy>
     </target>
 
     <target name="compile" depends="init"
         description="compiles the source">
-        <javac srcdir="${main_src}"
-               classpath="${maincp}" destdir="${build}/main"/>
+        <javac srcdir="${src}"
+               classpath="junit-4.7.jar"
+               destdir="${build}"/>
     </target>
 
     <target name="dist" depends="compile,javadoc"
         description="generates a dist">
         <mkdir dir ="${dist}"/>
         <jar jarfile="${dist}/WireworldEvolver-${DSTAMP}.jar"
-             basedir="${build}/main">
+             basedir="${build}">
              <manifest>
                 <attribute name="Main-Class" value="${mainClass}"/>
              </manifest>
-         </jar>
-    </target>
-
-    <target name="test" depends="compile">
-        <javac srcdir="${tests_src}"
-               classpath="${maincp}:${testscp}:${junitcp}"
-               destdir="${build}"/>
+        </jar>
     </target>
 
     <target name="clean"
@@ -48,11 +42,14 @@
     </target>
 
     <target name="javadoc">
-            <mkdir dir="${api}" />
-            <javadoc sourcepath="${main_src}"
-                    destdir="${api}"
-                    packagenames="wireworldevolver"
-                    classpath="${maincp}"
-                    use="true" />
+        <mkdir dir="${api}" />
+        <javadoc destdir="${api}"
+                classpath="junit-4.7.jar:${build}"
+                use="true">
+            <packageset dir="${src}">
+                <include name="wireworldevolver"/>
+                <include name="wireworldevolver/test"/>
+            </packageset>
+        </javadoc>
     </target>
 </project>
